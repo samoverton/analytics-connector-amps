@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="Acunu AMPS Connectors">
+    <property environment="env"/>
+    
+    <condition property="jbird_lib" value="${env.JBIRD_HOME}/lib" else="../jbird.hg/lib">
+	  <isset property="env.JBIRD_HOME"/>
+	</condition>
+
+	<condition property="jbird_connector_lib" value="${jbird_lib}/analytics-connectors.jar" else="${jbird_lib}/../build/analytics-connectors.jar">
+		<available file="${jbird_lib}/analytics-connectors.jar"/>
+	</condition>
+	
+	<fileset dir="${jbird_lib}/" id="jbird-lib-fileset">
+		<include name="**/*.jar"/>
+	</fileset>
+	    
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    
+    <path id="Acunu AMPS Connectors.classpath">
+		<pathelement location="build"/>
+		<fileset dir="lib">
+			<include name="**/*.jar"/>
+			<exclude name="analytics-connectors.jar" />
+		</fileset>
+		<fileset refid="jbird-lib-fileset" />
+		<fileset file="${jbird_connector_lib}" />
+    </path>
+    
+	<target name="jar" depends="build" description="Create Jar file">
+		<jar jarfile="build/analytics-connector-amps.jar" basedir="build" includes="**/*.class" />
+	</target>
+	
+    <target name="init">
+        <mkdir dir="build"/>
+        <copy includeemptydirs="false" todir="build">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+    
+    <target depends="clean" name="cleanall"/>
+    
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="build" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="Acunu AMPS Connectors.classpath"/>
+        </javac>
+    </target>
+    
+</project>
