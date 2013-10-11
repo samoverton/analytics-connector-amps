@@ -1,0 +1,11 @@
+AMPS connector for Acunu Analytics
+Copyright 2013 Acunu Ltd.
+
+This package bundles open-source software compiled into Java Archives (JAR).
+
+This repository includes SLF4J 1.6.1, released under the MIT License and
+packaged into slf4j-api-1.6.1.jar and slf4j-log4j12-1.6.1.jar
+
+The AMPS connector depends on amps_client.jar (Copyright 2013 60East
+Technologies) and available for download at
+http://www.crankuptheamps.com/documentation/client-apis/java/
